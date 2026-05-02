@@ -27,6 +27,7 @@ package org.geysermc.geyser.translator.text;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
+import net.kyori.adventure.text.ObjectComponent;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.TranslationArgument;
 import net.kyori.adventure.text.flattener.ComponentFlattener;
@@ -113,6 +114,7 @@ public class MessageTranslator {
 
         ComponentFlattener flattener = ComponentFlattener.basic().toBuilder()
             .nestingLimit(30)
+            .mapper(ObjectComponent.class, component -> "")
             .complexMapper(TranslatableComponent.class, (translatable, consumer) -> {
                 final String translated = translatable.key();
                 final Matcher matcher = LOCALIZATION_PATTERN.matcher(translated);
