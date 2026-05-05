@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 GeyserMC. http://geysermc.org
+ * Copyright (c) 2026 GeyserMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,26 @@
  * @link https://github.com/GeyserMC/Geyser
  */
 
-package org.geysermc.geyser.level.block.type;
+package org.geysermc.geyser.command.defaults;
 
-public class WaterBlock extends Block {
-    public WaterBlock(String javaIdentifier, Builder builder) {
-        super(javaIdentifier, builder);
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.geysermc.geyser.api.util.TriState;
+import org.geysermc.geyser.command.GeyserCommand;
+import org.geysermc.geyser.command.GeyserCommandSource;
+import org.geysermc.geyser.session.GeyserSession;
+import org.incendo.cloud.context.CommandContext;
+
+public class GameruleCommand extends GeyserCommand {
+
+    public GameruleCommand(@NonNull String name, @NonNull String description, @NonNull String permission) {
+        super(name, description, permission, TriState.NOT_SET, true, true);
+    }
+
+    @Override
+    public void execute(CommandContext<GeyserCommandSource> context) {
+        GeyserSession session = context.sender().connection();
+        if (session != null) {
+            session.getGameRuleHandler().requestGamerules();
+        }
     }
 }

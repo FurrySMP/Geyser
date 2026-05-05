@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 GeyserMC. http://geysermc.org
+ * Copyright (c) 2026 GeyserMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,18 +23,17 @@
  * @link https://github.com/GeyserMC/Geyser
  */
 
-package org.geysermc.geyser.translator.protocol.bedrock;
+package org.geysermc.geyser.translator.protocol.java;
 
-import org.cloudburstmc.protocol.bedrock.packet.EmoteListPacket;
 import org.geysermc.geyser.session.GeyserSession;
 import org.geysermc.geyser.translator.protocol.PacketTranslator;
 import org.geysermc.geyser.translator.protocol.Translator;
+import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.ClientboundGameRuleValuesPacket;
 
-@Translator(packet = EmoteListPacket.class)
-public class BedrockEmoteListTranslator extends PacketTranslator<EmoteListPacket> {
-
+@Translator(packet = ClientboundGameRuleValuesPacket.class)
+public class JavaGameRuleValuesTranslator extends PacketTranslator<ClientboundGameRuleValuesPacket> {
     @Override
-    public void translate(GeyserSession session, EmoteListPacket packet) {
-        session.refreshEmotes(packet.getPieceIds());
+    public void translate(GeyserSession session, ClientboundGameRuleValuesPacket packet) {
+        session.getGameRuleHandler().onGamerulesReceived(packet);
     }
 }
